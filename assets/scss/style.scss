@@ -1,0 +1,454 @@
+@use "sass:math";
+
+$color-blue: #3fb0fc;
+$color-sand: #f7dd80;
+$color-dark-green: #36633c;
+$color-leaf-green: #8ece3a;
+$color-sky-blue: #cae9fe;
+$color-sand-yellow: #f6eac0;
+$color-white: #fcfcfc;
+
+body {
+	font-family: "Roboto", "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+		"Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5 {
+	font-family: "Urbanist",'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+h1,
+h2,
+h3{
+	font-weight: 700;
+}
+
+$colors: (
+	"green": $color-dark-green,
+	"lgreen": $color-dark-green,
+);
+
+@each $class, $color in $colors {
+	.text-#{$class} {
+		color: $color !important;
+	}
+}
+
+video {
+	cursor: url("../media/icons/cursor.png"), auto !important;
+}
+.text-lg {
+	font-size: calc(max(2.7vmin, 1rem));
+}
+
+strong,
+b {
+	font-weight: 700;
+}
+
+.section-title {
+	h2 {
+		font-size: 3rem;
+		position: relative;
+		display: inline-block;
+		padding-left: 1rem;
+		&::after {
+			position: absolute;
+			content: "°";
+			top: -1rem;
+			left: 0;
+			color: red;
+		}
+		&::first-letter {
+			color: red;
+		}
+	}
+}
+
+.bg-pure {
+	background: url("../media/images/sky.gif") no-repeat, $color-sky-blue;
+	background-size: cover;
+	background-position: center;
+	background-blend-mode: normal;
+	background-attachment: fixed;
+}
+.bg-polluted {
+	background: url("../media/images/sky.gif") no-repeat, $color-sand-yellow;
+	background-size: cover;
+	background-position: center;
+	background-blend-mode: luminosity;
+	background-attachment: fixed;
+}
+
+.navbar {
+	position: sticky;
+	background-color: $color-white;
+	top: 0;
+	left: 0;
+	width: 100%;
+	z-index: 999;
+}
+ul.navbar-nav {
+	li {
+		position: relative;
+		padding: 0 0.5rem;
+		a {
+			font-family: "Cantora One", sans-serif;
+			text-transform: uppercase;
+			font-size: 1.3rem;
+		}
+	}
+}
+ul.main-nav {
+	li {
+		@media screen and (min-width: 1200px) {
+			&:not(:first-child) {
+				&::after {
+					position: absolute;
+					left: 0;
+					top: 50%;
+					height: 3rem;
+					transform: translateY(-50%);
+					width: 3px;
+					background-color: brown;
+					content: "";
+				}
+			}
+		}
+		a {
+			cursor: url("../media/icons/cursor.png"), auto !important;
+			font-weight: 500;
+			&:hover {
+				color: $color-dark-green;
+			}
+		}
+	}
+}
+ul.partners-nav {
+	gap: 2rem;
+	align-items: start;
+	li {
+		a {
+			color: inherit;
+			p {
+				text-transform: capitalize;
+				font-weight: 500;
+			}
+			img {
+				// height: 100px;
+				width: auto;
+			}
+		}
+	}
+}
+
+.section {
+	padding: calc(max(5%, 2rem)) 0;
+}
+
+.hero-section {
+	& + .video-overlay {
+		position: absolute;
+		top: 100px;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		z-index: 5;
+		video {
+			width: 100%;
+			height: 100%;
+			object-fit: cover;
+		}
+		&.hide {
+			z-index: -2;
+		}
+	}
+	position: relative;
+	h2 {
+		text-transform: capitalize;
+		font-size: calc(max(7vmin, 2.5rem));
+		font-weight: 700;
+	}
+}
+
+.page-title {
+	h1 {
+		text-transform: uppercase;
+		font-size: calc(max(5vmin, 2.5rem));
+		font-weight: 600;
+	}
+}
+
+.speaker-tile {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	p{
+		font-size: 12px;
+	}
+	&.normal {
+		.speaker-image {
+			width: 200px;
+			background: rgb(142, 206, 58);
+			background: linear-gradient(
+				90deg,
+				rgba(0, 0, 0, 0) 0%,
+				rgba(0, 0, 0, 0) 30%,
+				rgba(142, 206, 58, 1) 30%,
+				rgba(142, 206, 58, 1) 100%
+			);
+			clip-path: polygon(100% 0, 100% 100%, 60% 100%, 0 50%, 0 0);
+		}
+	}
+	&.key-speaker {
+		.speaker-image {
+			background: linear-gradient(
+				90deg,
+				rgba(0, 0, 0, 0) 0%,
+				rgba(0, 0, 0, 0) 50%,
+				rgba(142, 206, 58, 1) 50%,
+				rgba(142, 206, 58, 1) 100%
+			);
+			clip-path: polygon(100% 0, 100% 100%, 70% 100%, 0 40%, 0 0);
+		}
+	}
+}
+
+@keyframes levitate {
+	0%,
+	100% {
+		transform: translate(2rem);
+	}
+	50% {
+		transform: translate(0);
+	}
+}
+
+.hero-tree {
+	position: relative;
+	.cloud {
+		position: absolute;
+		z-index: 1;
+		width: 80%;
+		// @for $c from 0 through 7 {
+		// 	&.c#{$c} {
+		// 		bottom: 30% * math.random();
+		// 		left: 100% * math.random() - 20%;
+		// 		animation: levitate 10s ease-in-out 0s infinite normal none;
+		// 	}
+		// }
+
+		&.c0 {
+			bottom: 27.9075611574%;
+			left: -16.1703941299%;
+			animation: levitate 10s ease-in-out 0s infinite normal none;
+		}
+		&.c1 {
+			bottom: 23.4583559637%;
+			left: 10.6413491301%;
+			animation: levitate 10s ease-in-out 0s infinite normal none;
+		}
+		&.c2 {
+			bottom: 3.8597726987%;
+			left: 63.9872900169%;
+			animation: levitate 10s ease-in-out 0s infinite normal none;
+		}
+		&.c3 {
+			bottom: 7.4800830767%;
+			left: 54.8708673015%;
+			animation: levitate 10s ease-in-out 0s infinite normal none;
+		}
+		&.c4 {
+			bottom: 18.057012845%;
+			left: 57.9581880007%;
+			animation: levitate 10s ease-in-out 0s infinite normal none;
+		}
+		&.c5 {
+			bottom: 16.9930919866%;
+			left: -6.4643374437%;
+			animation: levitate 10s ease-in-out 0s infinite normal none;
+		}
+		&.c6 {
+			bottom: 5.6690227997%;
+			left: 52.903426945%;
+			animation: levitate 10s ease-in-out 0s infinite normal none;
+		}
+		&.c7 {
+			bottom: 18.5105094727%;
+			left: 33.7372489605%;
+			animation: levitate 10s ease-in-out 0s infinite normal none;
+		}
+	}
+	.fly-out {
+		transform: rotateY(180deg) scale(1.2);
+	}
+	.birds {
+		position: absolute;
+		top: 0;
+		right: 0;
+		height: 200px;
+		width: auto;
+	}
+}
+
+section {
+	&#speakers {
+		position: relative;
+		.wrapper {
+			padding: 4vmax 0;
+			padding-bottom: 10vmax;
+			position: relative;
+			z-index: 1;
+		}
+		.tree-element {
+			position: absolute;
+			width: 300px;
+			bottom: 0;
+			left: 9%;
+			z-index: 0;
+		}
+	}
+}
+
+.btn {
+	&.btn-green {
+		--bs-btn-color: #fff;
+		--bs-btn-bg: #{$color-dark-green};
+		--bs-btn-border-color: #{$color-dark-green};
+		--bs-btn-hover-color: #fff;
+		--bs-btn-hover-bg: #{$color-dark-green};
+		--bs-btn-hover-border-color: #{$color-dark-green};
+		--bs-btn-focus-shadow-rgb: 49, 132, 253;
+		--bs-btn-active-color: #fff;
+		--bs-btn-active-bg: #{$color-dark-green};
+		--bs-btn-active-border-color: #{$color-dark-green};
+		--bs-btn-active-shadow: inset 0 3px 5px rgba(255, 255, 255, 0.125);
+		--bs-btn-disabled-color: #fff;
+		--bs-btn-disabled-bg: #{$color-dark-green};
+		--bs-btn-disabled-border-color: #{$color-dark-green};
+
+		position: relative;
+		&::after {
+			content: "";
+			position: absolute;
+			top: 0;
+			right: -1.5rem;
+			height: 3rem;
+			width: 3rem;
+			background: url("../media/icons/maple-leaf.png") no-repeat;
+			background-size: contain;
+			background-position: center;
+			transform-origin: center bottom;
+			transform: rotate(15deg);
+			transition: all 0.5s ease-in;
+		}
+		&:hover {
+			&::after {
+				transform: rotate(-5deg);
+			}
+		}
+	}
+}
+
+.fixed {
+	position: fixed;
+	&-right {
+		position: fixed;
+		right: 0;
+		&-middle {
+			position: fixed;
+			right: 0;
+			top: 50%;
+			transform: translateY(-50%);
+		}
+	}
+	&-center {
+	}
+}
+
+.widget {
+	background-color: #fff;
+	z-index: 999;
+	padding: 0.5rem;
+	&.fixed-right-middle {
+		border-top-left-radius: 0.5rem;
+		border-bottom-left-radius: 0.5rem;
+	}
+}
+.countdown {
+	ul {
+		margin: 0;
+		padding: 0;
+		display: flex;
+		flex-direction: column;
+		list-style: none;
+		li {
+			font-size: 1.3rem;
+			font-family: "Cantora One", sans-serif;
+			text-align: center;
+			h5 {
+				font-size: 2.5rem;
+				font-weight: 600;
+			}
+			* {
+				margin: 0;
+				padding: 0;
+			}
+		}
+	}
+}
+
+.article-single {
+	text-decoration: none;
+	display: block;
+	background-color: $color-white;
+	border-bottom: 5px solid $color-leaf-green;
+	color: inherit;
+	.media-content {
+	}
+	.text-content {
+		padding: 1rem;
+		p {
+			text-decoration: none;
+			color: inherit;
+		}
+	}
+}
+
+.beforeAfter {
+	& > div:nth-child(3) > div > div {
+		width: 5.8rem !important;
+		height: 5.8rem !important;
+		background: url("../media/images/logo.png") no-repeat, #fff !important;
+		background-size: contain !important;
+		background-position: center !important;
+		border: 10px solid white;
+		position: relative;
+		&::after {
+			position: absolute;
+			content: "Drag to Change";
+			bottom: -3rem;
+			left: 50%;
+			width: 10rem;
+			transform: translateX(-50%);
+			font-weight: 700;
+		}
+		i {
+			display: none !important;
+		}
+	}
+}
+
+.player-green {
+	padding: 1rem;
+	border: 5px solid $color-leaf-green;
+	border-radius: 2rem;
+	overflow: hidden;
+	& > div {
+		border-radius: 1.4rem;
+		overflow: hidden;
+	}
+}

@@ -1,0 +1,22 @@
+// Countdown
+$blue-01: #031952;
+// $blue-02: #9cc5df;
+$blue-02: #83c6ff;
+$red-01: #e0302e;
+.flipdown {
+    &.flipdown__theme-dark{
+        .rotor-group:nth-child(n+2):nth-child(-n+3):after,
+        .rotor-group:nth-child(n+2):nth-child(-n+3):before{
+            background-color: $red-01;
+        }
+        .rotor{
+            &::after{
+                border-color: white;
+            }
+        }
+        .rotor-bottom, .rotor-top, .rotor,
+        .rotor-leaf-rear, .rotor-leaf-front{
+          background-color: $red-01;
+        }
+    }
+}
